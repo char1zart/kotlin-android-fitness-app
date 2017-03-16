@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:id="@+id/revec"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+     card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="3dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/us_name"
+                android:layout_alignParentTop="false"
+                android:textSize="20dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:text="Char1zart"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/us_mes"
+                android:layout_below="@+id/id_value"
+                android:layout_centerInParent="true"
+                android:text="Хочу бегать 5 минут"
+                android:textSize="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/cur_date"
+                android:layout_below="@+id/id_value"
+                android:layout_centerInParent="true"
+                android:text="01.01.2016"
+                android:textSize="15dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="8dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

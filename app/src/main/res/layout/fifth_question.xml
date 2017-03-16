@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/LL_vert">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="-На текущий момент вам худеть не нужно :)"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColorPrimary"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/t_tip"
+            android:layout_marginTop="20dp"
+            android:textSize="48dp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="-Хорошо!"
+            android:textColor="@color/textColorPrimary"
+            android:id="@+id/b_finish"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>
