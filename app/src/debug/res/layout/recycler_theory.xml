@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_toEndOf="@+id/id_bool"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/t_problem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_toRightOf="@+id/id_bool"
+            android:fontFamily="serif"
+            android:gravity="center_horizontal"
+            android:text="ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ ВСПОМОГАТЕЛЬНЫХ МЕХАНИЗМОВ И ОБОРУДОВАНИЯ"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/t_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_value"
+            android:layout_toRightOf="@+id/id_bool"
+            android:gravity="center_horizontal"
+            android:paddingTop="3dp"
+            android:text=" УКАЗАНИЯ ПО ТЕХНИЧЕСКОМУ ОБСЛУЖИВАНИЮ ОТДЕЛЬНЫХ МЕХАНИЗМОВ И АППАРАТОВ "
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/t_howTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_value"
+            android:layout_toRightOf="@+id/id_bool"
+            android:paddingTop="3dp"
+            android:text="привет"
+            android:textColor="#272727"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+

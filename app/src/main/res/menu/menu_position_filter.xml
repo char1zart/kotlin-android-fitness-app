@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:title="@string/filters"
+        android:id="@+id/filter">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/filter_standart"
+                    android:title="@string/filter_standart"/>
+                <item
+                    android:id="@+id/filter_favorite"
+                    android:title="@string/filter_favorite"/>
+                <item
+                    android:id="@+id/filter_random"
+                    android:title="@string/filter_random"/>
+            </group>
+        </menu>
+    </item>
+
+
+
+</menu>

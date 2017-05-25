@@ -2,53 +2,44 @@ package com.example.ch1zart.dbconnector
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.example.ch1zart.fitnessapp.R
 import org.jetbrains.anko.db.*
-
-class AchivTable(){
-    val table_name = "achievements"
-    val id = "_id"
-    val title = "title"
-    val status = "status"
-    val description = "description"
-}
-
-class TimerTable(){
-    val table_name = "Timer"
-    val id = "_id"
-    val time = "time"
-    val pressed = "pressed"
-}
-class QuestTable(){
-    val table_name = "Quest"
-    val id = "_id"
-    val data_start = "d_start"
-    val finish = "finish"
-    val complexity = "complexity"
-    val t_time = "t_time"
-    val t_how = "t_how"
-}
-
-class StatistickTable(){
-
-    val table_name = "Statistick"
-    val id = "_id"
-    val date = "date"
-    val time = "time"
-    val kkal = "kalories"
-    val step = "step"
-    val km = "distance"
-}
 
 class UserInfo(){
 
     val table_name = "UserInfo"
     val id = "_id"
-    val name = "Name"
-    val age = "Age"
-    val sex = "Sex"
-    val height = "Height"
-    val weight = "Weight"
-    val haveQuest = "Quest"
+    val email = "Email"
+    val password = "Password"
+    val login = "LogIn"
+}
+
+class SeaPositionsInfo(){
+
+    val table_name = "SeaPositionsInfo"
+    val id = "_id"
+    val position = "Position"
+    val discription = "Discription"
+    val favorite = "Favorite"
+}
+
+class Notes(){
+
+    val table_name = "Notes"
+    val id = "_id"
+    val note_name = "Note_name"
+    val discription = "Discription"
+    val date = "Date"
+    val ownerID = "owner"
+}
+
+class Theory(){
+
+    val table_name = "Theory"
+    val id = "_id"
+    val problem = "problem"
+    val title = "title"
+    val howTo = "howto"
 }
 
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatabase", null, 1) {
@@ -58,106 +49,108 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatab
     }
 
     companion object {
+
         private var instance: MyDatabaseOpenHelper? = null
-        private val at = AchivTable()
-        private val tt = TimerTable()
         private val ut = UserInfo()
-        private val st = StatistickTable()
-        private val qt = QuestTable()
+        private val spi = SeaPositionsInfo()
+        private val nt = Notes()
+        private val tt = Theory()
 
         @Synchronized
         fun getInstance(ctx: Context): MyDatabaseOpenHelper {
+
             if (instance == null) {
-               //  instance = MyDatabaseOpenHelper(ctx.getApplicationContext())
+                //  instance = MyDatabaseOpenHelper(ctx.getApplicationContext())
                 instance = MyDatabaseOpenHelper(ctx.applicationContext)
             }
+
             return instance!!
         }
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Here you create tables (more info about that is below)
-        createAchiveTable(db)
-        createTimerTable(db)
+
+        createNoteTable(db)
         createUserTable(db)
-        createQuestTable(db)
-        createStatistickTable(db)
+        createPositionTable(db)
+        createTheoryTable(db)
 }
 
-    fun createQuestTable(db: SQLiteDatabase){
-
-       db.createTable(qt.table_name, true, qt.id to INTEGER + PRIMARY_KEY, qt.data_start to TEXT, qt.finish to TEXT, qt.complexity to TEXT, qt.t_time to TEXT, qt.t_how to TEXT)
-        db.insert(qt.table_name, qt.data_start to "", qt.finish to "",qt.complexity to "", qt.t_time to "" , qt.t_how to "")
-    }
-
-    fun createAchiveTable(db: SQLiteDatabase)
-    {
-        db.createTable(at.table_name, true, at.id to INTEGER + PRIMARY_KEY, at.title to TEXT, at.description to TEXT, at.status to TEXT)
-        db.insert(at.table_name, at.title to "На игре", at.description to "Первый запуск приложения",at.status to "true")
-        db.insert(at.table_name, at.title to "Отличное начало", at.description to "Запуск первой тренировки",at.status to "false")
-        db.insert(at.table_name, at.title to "Шаг вперед", at.description to "Пройти один киллометр",at.status to "false")
-        db.insert(at.table_name, at.title to "Шаг вперед 2", at.description to "Пройти пять киллометр",at.status to "false")
-        db.insert(at.table_name, at.title to "Шаг вперед 3",at.description to "Пройти пятнадцать киллометр",at.status to "false")
-        db.insert(at.table_name, at.title to "Сжигатель", at.description to "Сжечь 1000 калорий",at.status to "false")
-        db.insert(at.table_name, at.title to "Дальшелучше", at.description to "Сжечь 10000 калорий",at.status to "false")
-    }
-
-
-   fun createStatistickTable(db: SQLiteDatabase){
-
-      db.createTable(st.table_name, true, st.id to INTEGER + PRIMARY_KEY, st.date to TEXT, st.step to INTEGER ,st.kkal to TEXT, st.km to INTEGER, st.time to TEXT)
-       db.insert(st.table_name, st.date to "0", st.kkal to "0", st.km to 0, st.time to "0", st.step to 0)
-    }
-
-    fun SaveResultStatistick(db:SQLiteDatabase,date: String, kkal: String, km: Int, time:String, step:Int)
-    {
-        db.insert(st.table_name, st.date to date, st.kkal to kkal, st.km to km, st.time to time, st.step to step)
-    }
-
     fun createUserTable(db: SQLiteDatabase) {
-        db.createTable(ut.table_name, true, ut.id to INTEGER + PRIMARY_KEY, ut.name to TEXT, ut.age to INTEGER, ut.sex to TEXT, ut.height to INTEGER, ut.weight to INTEGER, ut.haveQuest to INTEGER )
-        db.insert(ut.table_name, ut.name to "Unreg", ut.age to 0, ut.sex to "", ut.height to 0, ut.weight to 0, ut.haveQuest to 0)
+        db.createTable(ut.table_name, true, ut.id to INTEGER + PRIMARY_KEY, ut.email to TEXT, ut.password to INTEGER,  ut.login to INTEGER)
     }
 
-    fun createTimerTable(db: SQLiteDatabase) {
-        db.createTable(tt.table_name, true, tt.id to INTEGER + PRIMARY_KEY, tt.time to INTEGER, tt.pressed to TEXT)
-        db.insert(tt.table_name, tt.time to 0, tt.pressed to "false")
+    fun createNoteTable(db: SQLiteDatabase) {
+        db.createTable(nt.table_name, true, nt.id to INTEGER + PRIMARY_KEY, nt.note_name to TEXT, nt.date to INTEGER, nt.discription to TEXT, nt.ownerID to INTEGER)
+    }
+
+
+    fun createPositionTable(db: SQLiteDatabase) {
+        db.createTable(spi.table_name, true, spi.id to INTEGER + PRIMARY_KEY, spi.position to TEXT, spi.discription to TEXT, spi.favorite to TEXT)
+
+        db.insert(spi.table_name, spi.position to "Старший механик", spi.discription to "Старший механик подчиняется капитану и является его заместителем по техническому обслуживанию судна." +
+                "Указания и распоряжения старшего механика по вопросам эксплуатации технических средств судна обязательны для исполнения всеми членами экипажа.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Второй механик", spi.discription to "Второй механик подчиняется старшему механику и является его первым заместителем", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Третий механик", spi.discription to "Третий механик подчиняется второму механику и в необходимых случаях замещает его", spi.favorite to "true")
+        db.insert(spi.table_name, spi.position to "Четвертый механик", spi.discription to "Четвертый механик подчиняется второму механику и в необходимых случаях замещает третьего механика." +
+                "Он отвечает за техническое состояние якорного, швартовного, буксирного и других палубных устройств и механизмов судна, грузовых устройств и средств передачи грузов на корабли.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Механик (по судовым системам)", spi.discription to "Механик (по судовым системам) подчиняется второму механику и в необходимых случаях замещает четвертого механика.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Механик по ремонту оборудования", spi.discription to "Он отвечает за техническое состояние и готовность к использованию станков и оборудования механической мастерской, электросварочного и газосварочного оборудования, а на судах, имеющих вертолеты, кроме того, за оборудование ангаров и технических средств обслуживания вертолетов.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Механик рефрижераторных установок", spi.discription to "Он отвечает за техническое состояние и надежную работу рефрижераторных установок и систем кондиционирования воздуха со всеми обслуживающими их техническими средствами, контрольно-измерительными приборами и автоматикой.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Электромеханик (на судах без электродвижения)", spi.discription to "Он отвечает за техническое состояние и готовность к использованию всего электрооборудования судна, включая электростанции, распределительные устройства, электроприводы всех механизмов, электрические схемы средств автоматизации и контроля, телефонной связи, систем сигнализации, а также источники питания радиотехнических средств и электрифицированных механизмов общего пользования.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Второй электромеханик (на электроходах)", spi.discription to "Он отвечает за техническое состояние и надежную работу рефрижераторных установок и систем кондиционирования воздуха со всеми обслуживающими их техническими средствами, контрольно-измерительными приборами и автоматикой.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Третий электромеханик (на электроходах)", spi.discription to "Он отвечает за техническое состояние и готовность к использованию вспомогательных и аварийных генераторов и их электроприводов, электрооборудования палубных механизмов, подруливающего устройства и электрической части котельной автоматики.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Четвертый электромеханик (на электроходах)", spi.discription to "Он отвечает за техническое состояние и надежную работу кабельных сетей, размагничивающих устройств, электрических вентиляторов, тифонов, преобразователей, электрооборудования камбуза, внутреннего и наружного освещения, в том числе аварийного, ходовых и якорных огней, прожекторов и приборов ночного видения.", spi.favorite to "false")
+        db.insert(spi.table_name, spi.position to "Сменный механик", spi.discription to "Он отвечает за управление главными двигателями и техническими средствами, обеспечивающими безопасность судна и его нормальную эксплуатацию.", spi.favorite to "false")
+    }
+
+    fun createTheoryTable(db: SQLiteDatabase)
+    {
+        db.createTable(tt.table_name, true, tt.id to INTEGER + PRIMARY_KEY, tt.problem to TEXT, tt.title to TEXT, tt.howTo to TEXT)
+
+        db.insert(tt.table_name, tt.problem to "3.0 Техническое обслуживание судовых технических средств", tt.title to "3.1 Порядок проведения работ по техническому обслуживанию.", tt.howTo to "3.1.1. Техническое обслуживание (ТО) СТС должно осуществляться по планово-предупредительной системе на основе месячных (рейсовых) планов ТО. План ТО составляется по заведованиям под контролем старшего механика и утверждается капитаном.")
+        db.insert(tt.table_name, tt.problem to "3.0 Техническое обслуживание судовых технических средств", tt.title to "3.1 Порядок проведения работ по техническому обслуживанию.", tt.howTo to "3.1.2. Периодичность технического обслуживания должна соответствовать периодичности, указанной в инструкции или типовом плане-графике, с отклонениями, учитывающими установленный ПГТО допуск на периодичность и возможность выполнения работ по условиям плавания. В обоснованных случаях старший механик по согласованию с судовладельцем может корректировать установленную инструкцией или типовым планом-графиком периодичность работ с учетом фактического состояния технического средства и " +
+                "режимов его использования. В гарантийный период эксплуатации корректировка периодичности ТО, установленная заводской инструкцией, не допускается.")
+        db.insert(tt.table_name, tt.problem to "3.0 Техническое обслуживание судовых технических средств", tt.title to "3.1 Порядок проведения работ по техническому обслуживанию.", tt.howTo to "3.1.3. Контроль за выполнением работ по ТО, приемка и сдача объектов должны производиться в соответствии с Положением о ТЭФ.")
+        db.insert(tt.table_name, tt.problem to "3.0 Техническое обслуживание судовых технических средств", tt.title to "3.1 Порядок проведения работ по техническому обслуживанию.", tt.howTo to "3.1.4. Выполнение работ по ТО СТС должно быть отражено в машинном журнале и ПГТО в соответствии с инструкциями по их ведению. Общие сведения по ТО СТС отражаются в техническом отчете судна.При выполнении работ по ТО должна быть произведена оценка технического состояния СТС путем осмотра состояния рабочих поверхностей, замера зазоров, просадок, осевых разбегов, проверки состояния регулировки и т. д. Результаты оценки" +
+                " должны быть занесены в журнал учета технического состояний; оборудования с указанием даты и наработки технического средства, сборочной единицы или детали." + " Записи в журнал вносит лицо командного состава, в чьем заведовании находятся технические средства. Оно же несет ответственность за полноту и правильность записей. Старший механик должен осуществлять контроль за соблюдением правил ведения журнала")
+
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.1. Разборка и сборка вспомогательных механизмов и оборудования в каждом отдельном случае должны производиться в сроки и в технологической последовательности, предусмотренной инструкцией завода-изготовителя, техническими условиями на ремонт или руководством по ремонту данного механизма, а также с учетом общих требований, изложенных в подразделе 3.1")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.2. При осмотре деталей насосов необходимо: выявить возможные дефекты шеек валов в районе уплотнений и подшипников скольжения (риски, задиры и пр.), а также проверить состояние валов насосов, подшипников качения, их посадку в корпус" +
+                "и на валах; проверить крепление насосов к фундаментам, а трубопроводов и воздушных колпаков P к насосам; проверить легкость вращения валов в подшипниках (без заметного люфта); проверить крепление соединительных муфт, состояние арматуры и контрольно-измерительных приборов. При монтаже и переборках насоса следует избегать чрезмерных усилии присоединении трубопроводов и затяжке фундаментных болтов. Это может привести к нарушению центровки, повышенным износам насоса или другим повреждениям.")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.3. При осмотре центробежных насосов необходимо проверить состояние поверхностей и входных кромок лопаток рабочих колес. При осмотре вихревых насосом следует обращать внимание па величину бокового зазора между роторами и секциями.")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.4. В шестеренных насосах следует замерить зазоры в подшипниках и шестернях, а также между шестернями и корпусом.При разборке винтовых и шестеренных насосов необходимо замаркировать зубья шестерен, положение винтов относительно друг друга и корпуса для обеспечения правильности сборки.")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.5. При осмотре струйных насосов особое внимание следует обращать на состояние (износ) сопел, соосность рабочих конусов и на отложения накипи. Очистку конусов и сопел следует производить только деревянными палочками или проволокой из красной меди.")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.6. При сборке эжектора необходимо обеспечить соосность сопла и диффузора, не допускать повреждений стенок и кромок сопел, обеспечить,воздухонепроницаемость частей корпуса эжектора в местах их соединений и составного диффузора.")
+        db.insert(tt.table_name, tt.problem to "3.6 Техническое обслуживание вспомогательных механизмов и оборудования", tt.title to "3.6.1 Указания по техническому обслуживанию отдельных механизмов и аппаратов.", tt.howTo to "1.7. При разборке и осмотре вентиляторов необходимо:проверить плотность посадки рабочего колеса на валу и состояние шпоночных гнезд, заклепочных (сварных) соединений лопаток с дисками, проверить отсутствие на лопатках трещин, вмятин, прогибов; проверить радиальные зазоры между крылаткой и корпусом и торцевые зазоры между крылаткой и крышками корпуса; проверить состояние и износ подшипников и шеек вала.")
+
+
+        db.insert(tt.table_name, tt.problem to "3.9 Техническое обслуживание газотурбинных установок.", tt.title to "3.9.1 Общие указания.", tt.howTo to "1.1 Нормативная периодичность ТО ГГТА определяется утвержденными судовладельцем ПГТО, инструкцией по ТО (ИТО) заводов-изготовителей сборочных единиц агрегата.")
+        db.insert(tt.table_name, tt.problem to "3.9 Техническое обслуживание газотурбинных установок.", tt.title to "3.9.1 Общие указания.", tt.howTo to "1.2 Нормативные сроки между ТО ГГТА могут быть изменены судовладельцем и зависимости от технического состояния и условий эксплуатации агрегата.")
+        db.insert(tt.table_name, tt.problem to "3.9 Техническое обслуживание газотурбинных установок.", tt.title to "3.9.1 Общие указания.", tt.howTo to "1.3 Выявленные в процессе ТЭ неисправности ГГТА, дефекты отдельных деталей и сборочных единиц подлежат немедленному устранению. В случае невозможности устранения выявленной неисправности или дефекта немедленно, необходимо эту неисправность пли дефект устранить при первой возможности.")
+        db.insert(tt.table_name, tt.problem to "3.9 Техническое обслуживание газотурбинных установок.", tt.title to "3.9.1 Общие указания.", tt.howTo to "1.4 Все операции по ТО и устранению неисправностей необходимо производить только на остановленном ГТД.")
+    }
+
+    fun saveUser(db:SQLiteDatabase, email: String, password: Long, logIn: Int)
+    {
+        db.insert(ut.table_name, ut.email to email, ut.password to password, ut.login to logIn)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Here you can upgrade tables, as usual
         onCreate(db)
     }
 
-    fun GetNameUserTable(db:SQLiteDatabase):String
+    fun saveNote(db:SQLiteDatabase,date: Long, title: String, discription: String, ownerID: Int)
     {
-      val name =  db.select(ut.table_name, ut.name).where(ut.id + " = {userid}", "userid" to 1).parseSingle(StringParser)
-        return name
+        db.insert(nt.table_name, nt.date to date, nt.note_name to title, nt.discription to discription, nt.ownerID to ownerID)
     }
 
-    fun GetHeight(db:SQLiteDatabase):Int
+    fun deleteNote(db:SQLiteDatabase, id: Int)
     {
-        val height = db.select(ut.table_name, ut.height).where(ut.id + " = {userid}", "userid" to 1).parseSingle(IntParser)
-
-        return height
-    }
-
-    fun GetQUEST(db:SQLiteDatabase):Int
-    {
-        val have = db.select(ut.table_name, ut.haveQuest).where(ut.id + " = {userid}", "userid" to 1).parseSingle(IntParser)
-
-        return have
-    }
-
-
-    fun GetWeight(db:SQLiteDatabase):Int
-    {
-        val weight = db.select(ut.table_name, ut.weight).where(ut.id + " = {userid}", "userid" to 1).parseSingle(IntParser)
-
-        return weight
+        db.delete(nt.table_name, "_id = " + id, null)
     }
  }
 
 // Access property for Context
 val Context.database: MyDatabaseOpenHelper
-    get() = MyDatabaseOpenHelper.getInstance(getApplicationContext())
+get() = MyDatabaseOpenHelper.getInstance(applicationContext)

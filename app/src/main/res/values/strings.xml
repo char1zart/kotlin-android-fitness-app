@@ -3,59 +3,50 @@
 
     <string name="p_I_name">Имя</string>
     <string name="p_I_Age">Возраст</string>
-    <string name="p_I_Sex">Пол</string>
-    <string name="p_I_Height">Рост(См)</string>
-    <string name="p_I_Weight">Вес(Кг)</string>
 
 
-    <string name="app_name">Фитнес помощник</string>
-    <string name="action_settings">Settings</string>
-    <string name="drawer_item_reg">Регистрация</string>
-    <string name="drawer_item_reg_please">зарегистрируйтесь!</string>
-    <string name="drawer_item_training">Тренировка</string>
+    <string name="app_name">Морской справочник</string>
+
+
+    <string name="on_edit">Редактируй</string>
+    <string name="off_edit">Редактирование закончено</string>
+    <string name="drawer_hello_name">Добро пожаловать!</string>
+    <string name="drawer_item_reg">Зарегистрироватся</string>
     <string name="drawer_item_callme">Обратная связь</string>
-    <string name="drawer_item_sendtoserver">Отправлено</string>
-    <string name="drawer_panel">Панель управления</string>
-    <string name="drawer_map_1">Карта</string>
-    <string name="drawer_item_achiv">Достижения</string>
-    <string name="drawer_item_custom">Custom</string>
-    <string name="drawer_item_stat">Статистика</string>
-    <string name="drawer_item_find_friend">Компаньон</string>
-    <string name="drawer_item_expert_system">Советчик</string>
-    <string name="drawer_item_contact">Contact</string>
+    <string name="drawer_item_faq">Справочник</string>
+    <string name="drawer_item_note">Заметки</string>
     <string name="drawer_item_cabinet">Личный кабинет</string>
     <string name="drawer_item_rating">Оценить приложение</string>
-    <string name="drawer_item_alert">Будет доступно через 5 минут</string>
-    <string name="drawer_item_tips_1">Необходимо зарегистрироваться</string>
-    <string name="drawer_item_tips_2">Для полного функционала необходима регистрация</string>
 
-    <string name="drawer_item_name">Имя*</string>
-    <string name="drawer_item_age">Возраст*</string>
-    <string name="drawer_item_sex">Пол(М/Ж)*</string>
-    <string name="drawer_item_height">Рост(см)*</string>
-    <string name="drawer_item_weight">Вес(кг)*</string>
-    <string name="drawer_item_inSystem">Остаться в системе?</string>
-    <string name="drawer_item_yes">Да</string>
-    <string name="drawer_hello_name">Добро пожаловать,</string>
-    <string name="name">name</string>
-    <string name="drawer_item_refresh">Обновить список</string>
-    <string name="drawer_item_message">Введите сообщение</string>
-    <string name="drawer_with_me">Рядом со мной:</string>
+    <string name="warning_string">Заполните все поля</string>
+    <string name="task_done">Выполнено</string>
 
-    <array name="training_array">
-        <item>Время</item>
-        <item>Дистанция</item>
-        <item>Количество шагов</item>
-    </array>
+    <string name="linkto">Перейти на сайт</string>
+    <string name="refresh">Обновить</string>
+    <string name="save">Сохранить</string>
+    <string name="new_note">Новая запись</string>
+    <string name="cancel">Отменить</string>
+    <string name="delete">Удалить</string>
+    <string name="share">Поделится</string>
+    <string name="edit_note">Редактирование</string>
+    <string name="delete_all">Удалить все записи</string>
+    <string name="logout">Выйти</string>
+    <string name="login">Войти</string>
+    <string name="ops">В доступе отказано</string>
 
-    <string-array name="menu_array">
-        <item>История тренировок</item>
-        <item>Графики</item>
-        <item>Советчик</item>
-    </string-array>
-    <string name="title_privateinfo_list">Items</string>
-    <string name="title_privateinfo_detail">PrivateInfo Detail</string>
-    <string name="title_activity_private_info">PrivateInfo</string>
+
+
+    <string name="menu_theory">Теория</string>
+    <string name="menu_position">Должности</string>
+    <string name="menu_p_s">Обслуживание и ремонт СТС</string>
+    <string name="menu_newsfeed">Новости</string>
+
+
+    <string name="empty">Пусто</string>
+    <string name="filters">Фильтры</string>
+    <string name="filter_favorite">Избранное</string>
+    <string name="filter_standart">Обычный</string>
+    <string name="filter_random">Случайно</string>
 
 
 </resources>
