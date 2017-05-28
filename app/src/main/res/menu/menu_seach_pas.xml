@@ -9,4 +9,19 @@
             android:title="@android:string/search_go"
             yourapp:actionViewClass="android.support.v7.widget.SearchView"
             yourapp:showAsAction="always|collapseActionView" />
+
+        <item
+            android:title="@string/filters"
+            android:id="@+id/filter">
+                <menu>
+                        <group>
+                                <item
+                                    android:id="@+id/filter_standart"
+                                    android:title="@string/filter_standart"/>
+                                <item
+                                    android:id="@+id/filter_favorite"
+                                    android:title="@string/filter_favorite"/>
+                        </group>
+                </menu>
+        </item>
 </menu>

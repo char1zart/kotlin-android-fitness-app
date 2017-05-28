@@ -2,9 +2,12 @@ package com.example.ch1zart.another
 
 import android.app.Activity
 import android.app.Fragment
+import android.app.FragmentManager
+import android.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import com.example.ch1zart.fitnessapp.R
 import com.example.ch1zart.newsfeed.NewsFeedFragment
 import com.example.ch1zart.position.PositionFragment
@@ -15,13 +18,20 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import org.jetbrains.anko.*
-import com.example.ch1zart.theory.TheoryFragment
+import com.example.ch1zart.container.ContainerFragment
+import com.example.ch1zart.dbconnector.Emergencycases
+import com.example.ch1zart.dbconnector.Rules
+import com.example.ch1zart.dbconnector.SeaPositionsInfo
+import com.example.ch1zart.dbconnector.Theory
+import com.example.ch1zart.emergency.EmergencycasesFragment
+import com.example.ch1zart.position.PositFragment
+import com.example.ch1zart.problemANDsolves.SolvesFragment
+import com.example.ch1zart.rules.RulesFragment
 import com.example.ch1zart.userpack.PrivateInfo
 
 
-class MainActivity : AppCompatActivity() , FragmentActions {
-
-    lateinit var drawerResult: Drawer
+class MainActivity : AppCompatActivity() , IFragmentActions {
+     lateinit var drawerResult: Drawer
 
     val toolbar by lazy {
         find<Toolbar>(R.id.toolbar_actionbar)
@@ -32,18 +42,16 @@ class MainActivity : AppCompatActivity() , FragmentActions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistic)
-
-       doAsync {
-           replaceFragment(Loader())
-       }
+        replaceFragment(Loader())
     }
 
     override fun initDrawer() {
         initDrawerMenu()
     }
 
-    override fun openNewFragment(nf: Fragment) {
-        replaceFragment(nf)
+    override fun openNewFragment(nf: MainFragment, anim: String) {
+        to.set_Animation = "open"
+            replaceFragment(nf)
     }
 
     override fun openDrawer(activity: Activity,toolbar: Toolbar) {
@@ -55,14 +63,19 @@ class MainActivity : AppCompatActivity() , FragmentActions {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun replaceFragment(new_fragment: Fragment) {
+    fun replaceFragment(new_fragment: MainFragment) {
 
-            var fragment2 = new_fragment
-            val fragmentManager = fragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, fragment2)
+        val newFragment= new_fragment
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
 
-            fragmentTransaction.commitAllowingStateLoss()
+        if(to.set_Animation == "back") {
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+        }
+        else fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+            fragmentTransaction .replace(R.id.fragment_container, newFragment)
+        fragmentTransaction.commit()
     }
 
     fun initDrawerMenu(): Boolean {
@@ -80,6 +93,8 @@ class MainActivity : AppCompatActivity() , FragmentActions {
                         DividerDrawerItem(),
                         PrimaryDrawerItem().withName(R.string.menu_p_s).withIcon(GoogleMaterial.Icon.gmd_build),
                         PrimaryDrawerItem().withName(R.string.menu_position).withIcon(GoogleMaterial.Icon.gmd_event),
+                        PrimaryDrawerItem().withName(R.string.menu_rules).withIcon(GoogleMaterial.Icon.gmd_watch),
+                        PrimaryDrawerItem().withName(R.string.menu_emergencycases).withIcon(GoogleMaterial.Icon.gmd_warning),
                         DividerDrawerItem(),
                         PrimaryDrawerItem().withName(R.string.drawer_item_note).withIcon(GoogleMaterial.Icon.gmd_equalizer),
                         DividerDrawerItem(),
@@ -92,30 +107,37 @@ class MainActivity : AppCompatActivity() , FragmentActions {
 
                         }
                         1 -> {
-                            if(to.haveUser)
-                            openIt(PrivateInfo(),position)
+                             openIt(PrivateInfo(),position)
                         }
 
-                       3 -> {
-                           openIt(TheoryFragment(),position)
+                        3 -> {
+                           openIt(SolvesFragment(),position)
                         }
 
                         4 -> {
-                            openIt(PositionFragment(),position)
+                            openIt(PositFragment(),position)
                         }
 
-                        6 -> {
-                            openIt(NotesFragment(),position)
+                        5 -> {
+                            openIt(RulesFragment(),position)
                         }
-                        8->  {
+                        6 -> {
+                            openIt(EmergencycasesFragment(),position)
+                        }
+
+                        8 -> {
+                          openIt(NotesFragment(),position)
+                        }
+
+                        10->  {
                             alert("Обратиться за помощью по номеру +38 098 677 33 77 или info@seafaresjournal.com", "Обратная связь") {
-                                positiveButton("Да") { browse("https://vk.com/im?media=&sel=32764093/") }
+                                positiveButton("Да") { browse("https://www.seafarersjournal.com/") }
                                 negativeButton("Нет")
                             }.show()
                         }
-                        9 -> {
+                        11 -> {
                             alert("Оценить приложение?", "PlayMarket") {
-                                positiveButton("Да") { browse("https://vk.com/im?media=&sel=32764093/") }
+                                positiveButton("Да") { browse("https://www.seafarersjournal.com/") }
                                 negativeButton("Нет")
                             }.show()
                         }
@@ -127,25 +149,21 @@ class MainActivity : AppCompatActivity() , FragmentActions {
         return true
     }
 
-    override fun onBackPressed() {
-    }
-
     fun _onStart()
     {
         openIt(NewsFeedFragment(),0)
     }
 
-    fun openIt(f:Fragment, p: Int)
-    {
-        if(p != to.inMenu.get()) {
+    fun openIt(f:MainFragment, p: Int) {
+
+        if (p != to.inMenu.get()) {
             doAsync {
                 replaceFragment(f)
                 to.inMenu.set(p)
+
                 uiThread { drawerResult.closeDrawer() }
             }
-        }
-        else
-        {
+        } else {
             drawerResult.closeDrawer()
         }
     }

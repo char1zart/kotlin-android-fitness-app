@@ -19,7 +19,7 @@ import android.support.v7.widget.GridLayoutManager
 
 
 
-class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener {
+class NotesFragment : MainFragment(), MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener {
 
     override fun onQueryTextSubmit(query: String?): Boolean  {return false}
 
@@ -28,14 +28,7 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
 
     lateinit var adapter: NotesAdapter
     private lateinit var rv: RecyclerView
-    private val to = TransferObject
     lateinit var empty: TextView
-
-    val toolbar by lazy {
-        find<Toolbar>(R.id.toolbar_actionbar)
-    }
-
-    lateinit private var FragmentActions: FragmentActions
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -65,7 +58,7 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
 
    fun createNewNote():Boolean
    {
-       FragmentActions.openNewFragment(NoteEditFragment())
+       IFragmentActions.openNewFragment(NoteEditFragment(),"open")
        to.note_status = 0
        return true
    }
@@ -85,7 +78,7 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item!!.itemId) {
         R.id.action_new -> {
             createNewNote() }
         R.id.action_search -> {
@@ -97,13 +90,7 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
             super.onOptionsItemSelected(item)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-            FragmentActions = ctx as FragmentActions
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         empty = find<TextView>(R.id.t_empty)
@@ -125,14 +112,13 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
         toolbar.title = resources.getString(R.string.drawer_item_note)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-
         if (!to.for_init_ns.isEmpty()) {
             empty.visibility = View.GONE
         } else {
             empty.visibility = View.VISIBLE
         }
 
-        FragmentActions.openDrawer(activity, toolbar)
+       IFragmentActions.openDrawer(activity, toolbar)
     }
 
     fun chooseNote(p: Int)
@@ -142,7 +128,7 @@ class NotesFragment : Fragment(), MenuItemCompat.OnActionExpandListener, SearchV
         to.status = p
         to.for_note_state.add(to.for_search[p])
 
-        FragmentActions.openNewFragment(NoteEditFragment())
+        IFragmentActions.openNewFragment(NoteEditFragment(),"open")
     }
 
     fun getData() {

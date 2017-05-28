@@ -26,7 +26,7 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.update
 import java.util.*
 
-class RegFragment : Fragment() {
+class RegFragment : MainFragment() {
 
     val b_reg by lazy {
         find<Button>(R.id.b_reg)
@@ -40,9 +40,6 @@ class RegFragment : Fragment() {
 
     lateinit var email: EditText
     lateinit var psswrd: EditText
-    lateinit var mDbHelper: MyDatabaseOpenHelper
-    lateinit var dbW: SQLiteDatabase
-    private val to = TransferObject
     private lateinit var notes: MutableList<NotesClass>
 
     val nt = Notes()
@@ -58,21 +55,11 @@ class RegFragment : Fragment() {
         return view
     }
 
-    lateinit private var FragmentActions: FragmentActions
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mDbHelper = MyDatabaseOpenHelper(ctx)
-        FragmentActions = ctx as FragmentActions
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         email = find<EditText>(R.id.your_email_address)
         psswrd = find<EditText>(R.id.create_new_password)
-
-        //b_login.visibility = View.GONE
 
         b_login.setOnClickListener {
             notes = ArrayList()
@@ -111,8 +98,8 @@ class RegFragment : Fragment() {
 
                            to.idUser = idU[0]
                            to.haveUser = true
-                           FragmentActions.initDrawer()
-                           FragmentActions.openNewFragment(NewsFeedFragment())
+                           IFragmentActions.initDrawer()
+                           IFragmentActions.openNewFragment(NewsFeedFragment(),"open")
                       }
                       else
                       {
@@ -157,8 +144,8 @@ class RegFragment : Fragment() {
 
                 to.haveUser = true
                 to.idUser = check[0]
-              //  FragmentActions.initDrawer()
-              //  FragmentActions.openNewFragment(NewsFeedFragment())
+                IFragmentActions.initDrawer()
+                IFragmentActions.openNewFragment(NewsFeedFragment(),"open")
 
 
                     to.haveUser = true
@@ -168,8 +155,8 @@ class RegFragment : Fragment() {
 
                 uiThread {
                     toast(R.string.drawer_hello_name)
-                    FragmentActions.initDrawer()
-                    FragmentActions.openNewFragment(NewsFeedFragment())
+                    IFragmentActions.initDrawer()
+                    IFragmentActions.openNewFragment(NewsFeedFragment(),"open")
                 }
             }
         }

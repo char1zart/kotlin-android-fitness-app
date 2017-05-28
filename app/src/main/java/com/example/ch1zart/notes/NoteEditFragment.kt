@@ -19,24 +19,15 @@ import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.ShareActionProvider
 import android.text.Editable
 import android.text.TextWatcher
-import com.example.ch1zart.another.FragmentActions
+import com.example.ch1zart.another.IFragmentActions
+import com.example.ch1zart.another.MainFragment
 import com.example.ch1zart.newsfeed.NewsFeedFragment
 
 
-class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedListener, TextWatcher {
-
-    lateinit var mDbHelper: MyDatabaseOpenHelper
-    lateinit var dbW: SQLiteDatabase
-    private val to = TransferObject
-    lateinit private var FragmentActions: FragmentActions
+class NoteEditFragment : MainFragment(), ShareActionProvider.OnShareTargetSelectedListener, TextWatcher {
 
     lateinit var myShareIntent: Intent
     lateinit var share: ShareActionProvider
-
-
-    val toolbar by lazy {
-        find<Toolbar>(R.id.toolbar_actionbar)
-    }
 
     val newnote by lazy {
         find<EditText>(R.id.e_newnote)
@@ -65,7 +56,7 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
             else
         {
 
-            var item = menu.findItem(R.id.action_share)
+            val item = menu.findItem(R.id.action_share)
 
             share = ShareActionProvider(activity)
             share.setShareIntent(createShareIntent())
@@ -77,7 +68,7 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item!!.itemId) {
         R.id.action_save -> { saveNote() }
         R.id.action_cancel -> { cancelNote()}
         R.id.action_share -> { shareNote() }
@@ -100,15 +91,8 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
 
 
     fun cancelNote():Boolean {
-        FragmentActions.openNewFragment(NotesFragment())
+        IFragmentActions.openNewFragment(NotesFragment(),"back")
         return true
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        FragmentActions = ctx as FragmentActions
-        mDbHelper = MyDatabaseOpenHelper(ctx)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -126,14 +110,14 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
         }
 
         else {
-            toolbar.title = resources.getString(R.string.new_note)
+           toolbar.title = resources.getString(R.string.new_note)
         }
 
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        FragmentActions.getArrowBack()
+       (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        IFragmentActions.getArrowBack()
 
         toolbar.setNavigationOnClickListener {
-            FragmentActions.openNewFragment(NotesFragment())
+        IFragmentActions.openNewFragment(NotesFragment(),"back")
         }
 
         titlenote.addTextChangedListener(this)
@@ -155,7 +139,7 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
            dbW.close()
             to.for_init_ns.remove(to.for_note_state[0])
             uiThread {
-                FragmentActions.openNewFragment(NotesFragment())
+                IFragmentActions.openNewFragment(NotesFragment(),"open")
             }
         }
         return true
@@ -173,7 +157,7 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
                         ///в бд ид начинается с 1 ///
                         to.for_init_ns.add(NotesClass("${titlenote.text}", "${newnote.text}", App().getCurrentDate(App().getCurrentTime()), to.for_init_ns.size - 1))
                         toast(resources.getString(R.string.task_done))
-                        FragmentActions.openNewFragment(NotesFragment())
+                        IFragmentActions.openNewFragment(NotesFragment(),"back")
                     }
                 }
             } else {
@@ -191,7 +175,7 @@ class NoteEditFragment : Fragment(), ShareActionProvider.OnShareTargetSelectedLi
                     uiThread {
                         toast(resources.getString(R.string.task_done))
                         to.for_note_state.clear()
-                        FragmentActions.openNewFragment(NotesFragment())
+                        IFragmentActions.openNewFragment(NotesFragment(),"back")
                     }
                 }
             }

@@ -11,14 +11,14 @@ import com.example.ch1zart.another.TransferObject
 import com.example.ch1zart.dbconnector.MyDatabaseOpenHelper
 import com.example.ch1zart.dbconnector.SeaPositionsInfo
 import com.example.ch1zart.fitnessapp.R
-import com.example.ch1zart.another.FragmentActions
+import com.example.ch1zart.another.IFragmentActions
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.*
 import java.util.*
 
 @Suppress("DEPRECATION")
 class PositionFragment: Fragment() {
-
+/*
     var pt = SeaPositionsInfo()
 
     lateinit var mDbHelper: MyDatabaseOpenHelper
@@ -61,7 +61,7 @@ class PositionFragment: Fragment() {
         rv.addItemDecoration(mDividerItemDecoration)
     }
 
-    lateinit private var FragmentActions: FragmentActions
+    lateinit private var IFragmentActions: IFragmentActions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class PositionFragment: Fragment() {
         mDbHelper = MyDatabaseOpenHelper(ctx)
         positions = ArrayList()
 
-        FragmentActions = ctx as FragmentActions
+        IFragmentActions = ctx as IFragmentActions
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -78,7 +78,7 @@ class PositionFragment: Fragment() {
         toolbar.title = resources.getString(R.string.menu_position)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        FragmentActions.openDrawer(activity, toolbar)
+        IFragmentActions.openDrawer(activity, toolbar)
 
         getData()
     }
@@ -210,11 +210,5 @@ class PositionFragment: Fragment() {
                 }
             }
         }
-    }
+    }*/
 }
-
-    class PositionsRowParser : RowParser<PositionClassParse> {
-        override fun parseRow(columns: Array<Any?>): PositionClassParse {
-            return PositionClassParse("${columns[0]}", "${columns[1]}", "${columns[2]}")
-        }
-    }

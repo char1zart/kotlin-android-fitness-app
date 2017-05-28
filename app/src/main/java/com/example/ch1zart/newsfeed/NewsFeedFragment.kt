@@ -7,11 +7,10 @@ import android.support.v7.widget.*
 import android.view.*
 import android.widget.ProgressBar
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.example.ch1zart.another.FragmentActions
-import com.example.ch1zart.another.TheoryRowParser
+import com.example.ch1zart.another.IFragmentActions
+import com.example.ch1zart.another.MainFragment
 import com.example.ch1zart.another.TransferObject
 import com.example.ch1zart.fitnessapp.R
-import com.example.ch1zart.theory.TheoryClass
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.IntParser
 import org.jetbrains.anko.db.select
@@ -22,11 +21,7 @@ import org.jsoup.select.Elements
 import java.util.*
 
 
-class NewsFeedFragment : Fragment() {
-
-    val toolbar by lazy {
-        find<Toolbar>(R.id.toolbar_actionbar)
-    }
+class NewsFeedFragment : MainFragment() {
 
     lateinit var adapter: NewsAdapter
     private lateinit var rv: RecyclerView
@@ -39,9 +34,6 @@ class NewsFeedFragment : Fragment() {
     val max = 10
     var lastIndex = 2
 
-    private val to = TransferObject
-    lateinit private var FragmentActions: FragmentActions
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_newsfeed, container, false)
@@ -51,12 +43,6 @@ class NewsFeedFragment : Fragment() {
         return view
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        FragmentActions = ctx as FragmentActions
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -64,7 +50,7 @@ class NewsFeedFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         progress = find<ProgressBar>(R.id.progress)
 
-        FragmentActions.openDrawer(activity, toolbar)
+        IFragmentActions.openDrawer(activity, toolbar)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -170,16 +156,17 @@ class NewsFeedFragment : Fragment() {
     fun chooseNews(p: Int)
     {
        to.link_i = p
-       FragmentActions.openNewFragment(NewsDetailFragment())
+       IFragmentActions.openNewFragment(NewsDetailFragment(),"open")
     }
 
     fun refreshNews():Boolean
     {
         refreshData()
-        return true
+        return false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item!!.itemId) {
+
         R.id.action_refresh -> { refreshNews()}
 
         else ->

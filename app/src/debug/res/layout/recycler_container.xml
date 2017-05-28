@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toEndOf="@+id/id_bool"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/t_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_toRightOf="@+id/id_bool"
+                android:fontFamily="serif"
+                android:gravity="center_horizontal"
+                android:text="ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ ВСПОМОГАТЕЛЬНЫХ МЕХАНИЗМОВ И ОБОРУДОВАНИЯ"
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="false"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/t_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_value"
+                android:layout_toRightOf="@+id/id_bool"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:text=" УКАЗАНИЯ ПО ТЕХНИЧЕСКОМУ ОБСЛУЖИВАНИЮ ОТДЕЛЬНЫХ МЕХАНИЗМОВ И АППАРАТОВ "
+                android:textIsSelectable="false"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/t_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/id_value"
+                android:layout_toRightOf="@+id/id_bool"
+                android:paddingTop="3dp"
+                android:text="привет"
+                android:textColor="#272727"
+                android:textIsSelectable="false"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/id_bool"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:foregroundGravity="center_vertical|center_horizontal" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
+

@@ -1,16 +1,12 @@
 package com.example.ch1zart.another
 
 import android.app.Application
+import com.example.ch1zart.container.ContainerClass
 import com.example.ch1zart.notes.NotesClass
-import com.example.ch1zart.theory.TheoryClass
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-
-/**
- * Created by Ch1zART on 18.05.2017.
- */
 class App : Application(){
 
     var reverse: MutableList<NotesClass>
@@ -41,14 +37,14 @@ class App : Application(){
         val regex = Regex("(?i)(|\\W|^)($find)(|\\W|$)*(|\\S)", RegexOption.IGNORE_CASE)
 
         regex.findAll(where.notename).let {
-            var s = it.toMutableList()
+            val s = it.toMutableList()
             if (s.size > 0) {
                 to.for_search.add(where)
             }
         }
 
         regex.findAll(where.description).let {
-            var s = it.toMutableList()
+            val s = it.toMutableList()
             if (s.size > 0) {
                 to.for_search.add(where)
 
@@ -56,11 +52,10 @@ class App : Application(){
         }
     }
 
-
-    fun regExpTheory(find: String,where: TheoryClass) {
+    fun regExpTheory(find: String,where: ContainerClass) {
         val regex = Regex("(?i)(|\\W|^)($find)(|\\W|$)*(|\\S)", RegexOption.IGNORE_CASE)
 
-        val set = HashSet<TheoryClass>()
+        val set = HashSet<ContainerClass>()
 
         regex.findAll(where.title).let {
             val s = it.toMutableList()
@@ -70,7 +65,7 @@ class App : Application(){
             }
         }
 
-        regex.findAll(where.problem).let {
+        regex.findAll(where.subtitle).let {
             val s = it.toMutableList()
             if (s.size > 0) {
                 set.add(where)
@@ -79,7 +74,7 @@ class App : Application(){
             }
         }
 
-        regex.findAll(where.howTo).let {
+        regex.findAll(where.detail).let {
             val s = it.toMutableList()
             if (s.size > 0) {
                 set.add(where)
@@ -89,10 +84,12 @@ class App : Application(){
 
          for(i in set)
         {
-            to.for_theory_state.add(TheoryClass(where.problem,where.title,where.howTo,where.id))
+            to.container_state.add(ContainerClass(where.title,where.subtitle,where.detail,where.photoId,where.id))
         }
 
         val arrObj = set.size
         to.status = arrObj
     }
+
+
 }

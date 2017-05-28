@@ -6,7 +6,6 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.ch1zart.fitnessapp.R
-import com.example.ch1zart.position.PositionClass
 
 /**
  * Created by Ch1zART on 24.05.2017.

@@ -36,10 +36,11 @@
 
 
 
-    <string name="menu_theory">Теория</string>
-    <string name="menu_position">Должности</string>
+    <string name="menu_position">Должностные инструкции</string>
     <string name="menu_p_s">Обслуживание и ремонт СТС</string>
     <string name="menu_newsfeed">Новости</string>
+    <string name="menu_rules">Правила безопасности</string>
+    <string name="menu_emergencycases">Действия в аварийных случаях</string>
 
 
     <string name="empty">Пусто</string>

@@ -10,7 +10,8 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.example.ch1zart.another.FragmentActions
+import com.example.ch1zart.another.IFragmentActions
+import com.example.ch1zart.another.MainFragment
 import com.example.ch1zart.another.TransferObject
 import com.example.ch1zart.another.UserRowParser
 import com.example.ch1zart.dbconnector.MyDatabaseOpenHelper
@@ -24,24 +25,15 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.db.update
 import org.w3c.dom.Text
 
-class PrivateInfo : Fragment() {
+class PrivateInfo : MainFragment() {
 
     var userStorage:UserClass? = null
     val ut = UserInfo()
-
-    val toolbar by lazy {
-        find<Toolbar>(R.id.toolbar_actionbar)
-    }
-
-    private val to = TransferObject
-
 
     lateinit var email: EditText
     lateinit var psswrd: EditText
 
     var fab:FloatingActionButton? = null
-    lateinit var mDbHelper: MyDatabaseOpenHelper
-    lateinit var dbW: SQLiteDatabase
     var click = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -65,14 +57,6 @@ class PrivateInfo : Fragment() {
         }
     }
 
-    lateinit private var FragmentActions: FragmentActions
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mDbHelper = MyDatabaseOpenHelper(activity)
-        FragmentActions = ctx as FragmentActions
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -83,8 +67,7 @@ class PrivateInfo : Fragment() {
         fabClick()
         toolbar.title = resources.getString(R.string.drawer_item_cabinet)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
-        FragmentActions.openDrawer(activity, toolbar)
+         IFragmentActions.openDrawer(activity, toolbar)
 
         getUserInfo()
     }
@@ -164,7 +147,7 @@ class PrivateInfo : Fragment() {
             to.for_init_ns.clear()
             to.for_note_state.clear()
 
-            uiThread { FragmentActions.openNewFragment(RegFragment()) }
+            uiThread { IFragmentActions.openNewFragment(RegFragment(),"open") }
         }
      return true
     }
@@ -174,7 +157,7 @@ class PrivateInfo : Fragment() {
         inflater.inflate(R.menu.menu_exit, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item!!.itemId) {
         R.id.action_logout -> { logOut() }
 
         else ->  super.onOptionsItemSelected(item)
